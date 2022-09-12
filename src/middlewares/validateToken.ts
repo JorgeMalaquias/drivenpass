@@ -20,6 +20,6 @@ export async function validatingToken(req: Request, res: Response,next:NextFunct
             throw ({ type: 'unauthorized', message: 'token was not informed or not valid' });
         }
     }
-
+    res.locals.userEmail = data;
     next();
 }

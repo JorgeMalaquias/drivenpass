@@ -10,9 +10,18 @@ export async function gettingUserByEmail(email:string){
     return user;
 }
 export async function gettingUserById(id:number){
-    const user = await prisma.users.findUnique({
+    const user = await prisma.users.findFirst({
         where:{
             id
+        }
+    });
+    return user;
+}
+export async function gettingUserByIdAndEmail(id:number,email:string){
+    const user = await prisma.users.findFirst({
+        where:{
+            id,
+            email
         }
     });
     return user;

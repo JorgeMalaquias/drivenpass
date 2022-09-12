@@ -38,13 +38,14 @@ export async function logging({ email, password }: IUser) {
     return token;
 }
 
-async function checkingEmail(email:string){
+export async function checkingEmail(email:string){
     const user = await userRepository.gettingUserByEmail(email);
     if (user === null) {
         throw ({ type: 'unauthorized', message: 'Invalid credentials' });
     }
     return user;
 }
+
 function checkingPassword(password:string, encryptedPassword:string | any){
     if(!bcrypt.compareSync(password,encryptedPassword)){
         throw ({ type: 'unauthorized', message: 'Invalid credentials' });
