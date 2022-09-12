@@ -1,7 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-
 // ainda não foi dado o comando npx prisma migrate dev para criar o banco
 generator client {
   provider = "prisma-client-js"
@@ -10,4 +9,54 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Users {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+  credentials Credentials[]
+  notes Notes[]
+  cards Cards[]
+  wifis WiFis[]
+}
+
+model Credentials {
+  id Int @id @default(autoincrement())
+  name String
+  url String
+  password String
+  user Users @relation(fields: [userId], references: [id] )
+  userId Int
+}
+
+model Notes {
+  id Int @id @default(autoincrement())
+  title String
+  text String
+  user Users @relation(fields: [userId], references: [id] )
+  userId Int
+}
+
+model Cards {
+  id Int @id @default(autoincrement())
+  title String
+  number String
+  name String
+  securityCode String
+  expirationDate String
+  password String
+  isVirtual Boolean
+  type String
+  user Users @relation(fields: [userId], references: [id] )
+  userId Int
+}
+
+model WiFis {
+  id Int @id @default(autoincrement())
+  title String
+  name String
+  password String
+  user Users @relation(fields: [userId], references: [id] )
+  userId Int
 }
