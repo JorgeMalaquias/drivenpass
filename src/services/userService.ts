@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+
 import * as userRepository from "../repositories/userRepository"
 import Cryptr from "cryptr";
 import jwt from 'jsonwebtoken';
@@ -16,8 +16,13 @@ export async function registering({ email, password }: IUser) {
 async function verifyingUserByEmail(email: string) {
     const user = await userRepository.gettingUserByEmail(email);
     if (user !== null) {
-        console.log(user);
         throw ({ type: 'conflict', message: 'This email is already been used' });
+    }
+}
+export async function verifyingUserById(id: number) {
+    const user = await userRepository.gettingUserById(id);
+    if (user === null) {
+        throw ({ type: 'not_found', message: 'This id does not correspond to any user' });
     }
 }
 
